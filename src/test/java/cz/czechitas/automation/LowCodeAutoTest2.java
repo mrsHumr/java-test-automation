@@ -12,6 +12,7 @@ public class LowCodeAutoTest2 extends TestRunner {
     private String user1Pass = "Atest1";
     private String user2 = "tester@druhy.cz";
     private String user2Pass = "TesterD1";
+    private String newpassword = "ZmenaHesla1"
     private String name = browser.generateRandomName(7);
 
     private void LoginUser1(String user, String password) {
@@ -130,21 +131,28 @@ public class LowCodeAutoTest2 extends TestRunner {
     @DisplayName("Komplexni test podle zadani 7")
     void KomplexniTestSedmy() {
         LoginUser2(user2,user2Pass);
+
         browser.profileSection.goToProfilePage();
-        browser.profileSection.insertPassword("ZmenaHesla1");
-        browser.profileSection.insertPasswordVerification("ZmenaHesla1");
+        browser.profileSection.insertPassword(newpassword);
+        browser.profileSection.insertPasswordVerification(newpassword);
         browser.profileSection.clickChangeButton();
         browser.headerMenu.goToHomePage();
         browser.loginSection.logout();
+
         browser.loginSection.clickLoginMenuLink();
         browser.loginSection.insertEmail(user2);
-        browser.loginSection.insertPassword("ZmenaHesla1");
+        browser.loginSection.insertPassword(newpassword);
         browser.loginSection.clickLoginButton();
+
         browser.profileSection.goToProfilePage();
         browser.profileSection.insertPassword(user2Pass);
         browser.profileSection.insertPasswordVerification(user2Pass);
         browser.profileSection.clickChangeButton();
         browser.headerMenu.goToHomePage();
+        browser.loginSection.logout();
+
+        LoginUser2(user2,user2Pass);
+        asserter.checkIsLoggedIn();
         browser.loginSection.logout();
 
     }
